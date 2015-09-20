@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:+'
+    }
+}
+
+configurations.all {
+	resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if(details.requested.group == "org.springframework") {
+            details.useVersion("4.1.6.RELEASE")
+        }
+	}
+}
+
+allprojects {
+    apply plugin: 'idea'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url "https://repo.spring.io/snapshot" }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'war'
+    apply plugin: 'org.akhikhl.gretty'
+
+    dependencies {
+        compile 'javax.servlet:javax.servlet-api:3.1.0'
+	compile 'org.springframework.security:spring-security-web:4.0.3.CI-SNAPSHOT'
+	compile 'org.springframework.security:spring-security-config:4.0.3.CI-SNAPSHOT'
+    }
+
+    gretty {
+        port = 8080
+//        contextPath = 'demo'
+        servletContainer = 'jetty9' //tomcat7 or tomcat8
+    }
+}
