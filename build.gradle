@@ -9,15 +9,19 @@ buildscript {
 }
 
 configurations.all {
-	resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-        if(details.requested.group == "org.springframework") {
-            details.useVersion("4.1.6.RELEASE")
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.requested.group == "org.springframework") {
+            details.useVersion("$springFrameworkVersion")
         }
-	}
+    }
 }
 
 allprojects {
     apply plugin: 'idea'
+
+    ext {
+        springFrameworkVersion = "4.1.6.RELEASE"
+    }
 
     repositories {
         mavenCentral()
@@ -33,8 +37,10 @@ subprojects {
 
     dependencies {
         compile 'javax.servlet:javax.servlet-api:3.1.0'
-	compile 'org.springframework.security:spring-security-web:4.0.3.CI-SNAPSHOT'
-	compile 'org.springframework.security:spring-security-config:4.0.3.CI-SNAPSHOT'
+        compile 'org.springframework.security:spring-security-web:4.0.3.CI-SNAPSHOT'
+        compile 'org.springframework.security:spring-security-config:4.0.3.CI-SNAPSHOT'
+        compile 'org.apache.commons:commons-dbcp2:2.1.1'
+        runtime 'mysql:mysql-connector-java:5.1.35'
     }
 
     gretty {

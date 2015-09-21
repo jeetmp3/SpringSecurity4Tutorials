@@ -1,1 +1,1 @@
-include "Tutorial1Configuration", "Tutorial2CustomForm"
+include "Tutorial1Configuration", "Tutorial2CustomForm", "Tutorial3MultipleHttpConfig"
